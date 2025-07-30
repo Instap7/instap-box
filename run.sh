@@ -15,6 +15,11 @@ else
     if [ -z "$INSTAP_BOX" ]; then
         echo "Error: No INSTAP_BOX value provided"
         echo "Usage: ./run.sh [OPTIONS] --instap-box INSTAP_BOX_VALUE"
+        echo ""
+        echo "Examples:"
+        echo "  ./run.sh --instap-box my-box                    # Run in loop (60s interval)"
+        echo "  ./run.sh --instap-box my-box --log-level DEBUG  # Run with debug logging"
+        echo ""
         echo "Or set environment variable: export INSTAP_BOX=VALUE"
         echo "Or run: INSTAP_BOX=VALUE ./run.sh"
         exit 1
