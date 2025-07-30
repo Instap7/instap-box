@@ -18,7 +18,7 @@ class ModbusRegister:
     def _fetch_item_data(self):
         """Fetch modbus register data from the API based on slug."""
         self.logger.debug(f"Fetching modbus register data for slug: {self.slug}")
-        data = fetch_item(f"http://five.instap.app/api/sql/oneau/modbus_register?slug=eq.{self.slug}")
+        data = fetch_item("modbus_register",f"slug=eq.{self.slug}")
         self.name = data.get('name')
         self.created_at = data.get('created_at')
         self.tags = data.get('tags')

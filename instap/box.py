@@ -20,11 +20,11 @@ class InstapBox:
     def _fetch_item_data(self):
         """Fetch item data from the API based on slug."""
         self.logger.debug(f"Fetching item data for slug: {self.slug}")
-        data = fetch_item(f"http://five.instap.app/api/sql/oneau/instap_box?slug=eq.{self.slug}")
+        data = fetch_item("instap_box", f"slug=eq.{self.slug}")
         self.name = data.get('name')
         self.ip_address = data.get('ip_address')
         self.port = data.get('port')
-        for device in fetch_items(f"http://five.instap.app/api/sql/oneau/device?instap_box=eq.{self.slug}"):
+        for device in fetch_items("device", f"instap_box=eq.{self.slug}"):
             device_slug = device.get('slug')
             self.devices.append(Device(device_slug))
     

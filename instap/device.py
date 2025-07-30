@@ -19,7 +19,7 @@ class Device:
     def _fetch_item_data(self):
         """Fetch item data from the API based on slug."""
         self.logger.debug(f"Fetching item data for slug: {self.slug}")
-        data = fetch_item(f"http://five.instap.app/api/sql/oneau/device?slug=eq.{self.slug}")
+        data = fetch_item("device", f"slug=eq.{self.slug}")
         self.name = data.get('name')
         self.created_at = data.get('created_at')
         self.tags = data.get('tags')
@@ -29,7 +29,7 @@ class Device:
         self.instap_box = data.get('instap_box')
         self.label = data.get('label')
         model_slug = data.get('model')
-        device_model = fetch_item(f"http://five.instap.app/api/sql/oneau/device_model?slug=eq.{model_slug}")
+        device_model = fetch_item("device_model", f"slug=eq.{model_slug}")
         self.model = DeviceModel(device_model.get('slug'))
     
     def __str__(self):
@@ -50,7 +50,7 @@ class Parameter:
     def _fetch_item_data(self):
         """Fetch parameter data from the API based on slug."""
         self.logger.debug(f"Fetching parameter data for slug: {self.slug}")
-        data = fetch_item(f"http://five.instap.app/api/sql/oneau/parameter?slug=eq.{self.slug}")
+        data = fetch_item(f"parameter?slug=eq.{self.slug}")
         self.name = data.get('name')
         self.device = data.get('device')
         self.parameter_type = data.get('parameter_type')
