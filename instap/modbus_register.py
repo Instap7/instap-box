@@ -8,34 +8,32 @@ from .logger import get_logger
 class ModbusRegister:
     """Main Modbus Register class."""
     
-    def __init__(self, slug):
-        self.slug = slug
+    def __init__(self, data):
+        self.data = data
+        self.slug = data.get('slug')
         self.name = None
         self.logger = get_logger("instap.modbus_register")
-        self.logger.debug(f"Initializing ModbusRegister with slug: {slug}")
-        self._fetch_item_data()
+        self.logger.debug(f"Initializing ModbusRegister with data: {self.data}")
+        self._process_data()
     
-    def _fetch_item_data(self):
-        """Fetch modbus register data from the API based on slug."""
-        self.logger.debug(f"Fetching modbus register data for slug: {self.slug}")
-        data = fetch_item("modbus_register",f"slug=eq.{self.slug}")
-        self.name = data.get('name')
-        self.created_at = data.get('created_at')
-        self.tags = data.get('tags')
-        self.type = data.get('type')
-        self.label = data.get('label')
-        self.device_model = data.get('device_model')
-        self.register_address = data.get('register_address')
-        self.register_type = data.get('register_type')
-        self.data_type = data.get('data_type')
-        self.scale_factor = data.get('scale_factor')
-        self.unit = data.get('unit')
-        self.description = data.get('description')
-        self.min_value = data.get('min_value')
-        self.max_value = data.get('max_value')
-        self.default_value = data.get('default_value')
-        self.read_only = data.get('read_only')
-        self.write_only = data.get('write_only')
+    def _process_data(self):
+        self.name = self.data.get('name')
+        self.created_at = self.data.get('created_at')
+        self.tags = self.data.get('tags')
+        self.type = self.data.get('type')
+        self.label = self.data.get('label')
+        self.device_model = self.data.get('device_model')
+        self.register_address = self.data.get('register_address')
+        self.register_type = self.data.get('register_type')
+        self.data_type = self.data.get('data_type')
+        self.scale_factor = self.data.get('scale_factor')
+        self.unit = self.data.get('unit')
+        self.description = self.data.get('description')
+        self.min_value = self.data.get('min_value')
+        self.max_value = self.data.get('max_value')
+        self.default_value = self.data.get('default_value')
+        self.read_only = self.data.get('read_only')
+        self.write_only = self.data.get('write_only')
     
     def __str__(self):
         """String representation of the ModbusRegister."""

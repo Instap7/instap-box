@@ -9,8 +9,7 @@ import argparse
 import logging
 import traceback
 from instap.box import InstapBox
-from instap.modbus.processor import ModbusProcessor
-from instap.logger import setup_logger, get_logger
+from instap.logger import setup_logger
 
 def main_process(logger, instap_box_slug):
     # Initialize the main Instap Box

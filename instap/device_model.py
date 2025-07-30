@@ -27,8 +27,7 @@ class DeviceModel:
         self.type = data.get('type')
         self.label = data.get('label')
         for modbus_register in fetch_items("modbus_register", f"device_model=eq.{self.slug}"):
-            modbus_register_slug = modbus_register.get('slug')
-            self.modbus_registers.append(ModbusRegister(modbus_register_slug))
+            self.modbus_registers.append(ModbusRegister(modbus_register))
     
     def __str__(self):
         """String representation of the DeviceModel."""
