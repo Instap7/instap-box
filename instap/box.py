@@ -1,8 +1,9 @@
 """
 Instap Box main module.
 """
-from .item import fetch_item
+from .item import fetch_item, fetch_items
 from .logger import get_logger
+from .device import Device
 
 
 class InstapBox:
@@ -11,6 +12,7 @@ class InstapBox:
     def __init__(self, slug):
         self.slug = slug
         self.name = None
+        self.devices = []
         self.logger = get_logger("instap.box")
         self.logger.debug(f"Initializing InstapBox with slug: {slug}")
         self._fetch_item_data()
@@ -18,10 +20,13 @@ class InstapBox:
     def _fetch_item_data(self):
         """Fetch item data from the API based on slug."""
         self.logger.debug(f"Fetching item data for slug: {self.slug}")
-        data = fetch_item(f"http://five.instap.app/api/sql/oneau/device?instap_box=eq.ibox00002")
+        data = fetch_item(f"http://five.instap.app/api/sql/oneau/instap_box?slug=eq.{self.slug}")
         self.name = data.get('name')
         self.ip_address = data.get('ip_address')
         self.port = data.get('port')
+        for device in fetch_items(f"http://five.instap.app/api/sql/oneau/device?instap_box=eq.{self.slug}"):
+            device_slug = device.get('slug')
+            self.devices.append(Device(device_slug))
     
     def __str__(self):
         """String representation of the InstapBox."""
