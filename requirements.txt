@@ -1,0 +1,6 @@
+# Instap Box Python Dependencies
+# Add your dependencies here as needed
+
+# Example dependencies (uncomment and modify as needed):
+# pymodbus==3.5.4
+# pyserial==3.5 
