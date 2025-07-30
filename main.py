@@ -6,8 +6,15 @@ Reads INSTAP_BOX from command line argument.
 
 import sys
 import argparse
+import logging
 from instap.box import InstapBox
 from instap.modbus.processor import ModbusProcessor
+from instap.logger import setup_logger, get_logger
+
+def main_process(logger, instap_box_slug):
+    # Initialize the main Instap Box
+    instap_box = InstapBox(instap_box_slug)
+    logger.info(f"Instap Box: {instap_box}")
 
 def main():
     """Main function that initializes and runs the Instap Box application."""
@@ -16,27 +23,27 @@ def main():
     parser = argparse.ArgumentParser(description='Instap Box Application')
     parser.add_argument('--instap-box', '-i', required=True,
                        help='INSTAP_BOX value')
+    parser.add_argument('--log-level', '-l', default='INFO',
+                       choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
+                       help='Logging level (default: INFO)')
+    parser.add_argument('--log-file', '-f', 
+                       help='Log file path (optional)')
     args = parser.parse_args()
     
-    instap_box_value = args.instap_box
+    instap_box_slug = args.instap_box
     
-    print(f"Starting Instap Box with value: {instap_box_value}")
+    # Setup logger
+    log_level = getattr(logging, args.log_level.upper())
+    log_to_file = args.log_file is not None
+    logger = setup_logger(level=log_level, log_to_file=log_to_file, log_file=args.log_file)
+    
+    logger.info(f"Starting Instap Box with value: {instap_box_slug}")
     
     try:
-        # Initialize the main Instap Box
-        instap_box = InstapBox(instap_box_value)
-        
-        # Initialize Modbus processor
-        processor = ModbusProcessor()
-        
-        # Start the application
-        instap_box.start()
-        processor.start()
-        
-        print("Instap Box application started successfully")
-        
+        main_process(logger, instap_box_slug)
+        logger.info("Instap Box application started successfully")
     except Exception as e:
-        print(f"Error starting Instap Box application: {e}")
+        logger.error(f"Error starting Instap Box application: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
