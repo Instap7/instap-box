@@ -7,6 +7,7 @@ Reads INSTAP_BOX from command line argument.
 import sys
 import argparse
 import logging
+import traceback
 from instap.box import InstapBox
 from instap.modbus.processor import ModbusProcessor
 from instap.logger import setup_logger, get_logger
@@ -44,6 +45,7 @@ def main():
         logger.info("Instap Box application started successfully")
     except Exception as e:
         logger.error(f"Error starting Instap Box application: {e}")
+        logger.error(traceback.format_exc())
         sys.exit(1)
 
 if __name__ == "__main__":
