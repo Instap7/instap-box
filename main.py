@@ -12,17 +12,15 @@ from instap.box import InstapBox
 from instap.logger import setup_logger
 from instap.modbus.processor import ModbusProcessor
 
-def main_process(logger, instap_box_slug):
-    # Initialize the main Instap Box
+modbus_registers = []
+
+def main_process(instap_box_slug):
     instap_box = InstapBox(instap_box_slug)
-    logger.info(f"Instap Box: {instap_box}")
-    for device in instap_box.devices:
-        logger.info(f" * Device: {device}")
-        logger.info(f"   > Model: {device.model}")
-        for modbus_register in device.model.modbus_registers:
-            logger.info(f"     * Modbus Register: {modbus_register}")
-            modbus_processor = ModbusProcessor(modbus_register)
-            modbus_processor.process_modbus_register()
+    all_modbus_registers = instap_box.get_all_modbus_registers()
+    for modbus_register in all_modbus_registers:
+        modbus_processor = ModbusProcessor(modbus_register)
+        modbus_processor.process_modbus_register()
+    return all_modbus_registers
 
 def main():
     """Main function that initializes and runs the Instap Box application."""
@@ -48,7 +46,7 @@ def main():
     logger.info(f"Starting Instap Box with value: {instap_box_slug}")
     
     try:
-        main_process(logger, instap_box_slug)
+        main_process(instap_box_slug)
         logger.info("Instap Box application started successfully")
     except Exception as e:
         logger.error(f"Error starting Instap Box application: {e}")
