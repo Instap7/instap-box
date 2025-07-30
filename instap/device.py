@@ -3,6 +3,7 @@ Instap Device main module.
 """
 from .item import fetch_item, fetch_items
 from .logger import get_logger
+from .device_model import DeviceModel
 
 
 class Device:
@@ -27,7 +28,9 @@ class Device:
         self.facility = data.get('facility')
         self.instap_box = data.get('instap_box')
         self.label = data.get('label')
-        self.model = data.get('model')
+        model_slug = data.get('model')
+        device_model = fetch_item(f"http://five.instap.app/api/sql/oneau/device_model?slug=eq.{model_slug}")
+        self.model = DeviceModel(device_model)
     
     def __str__(self):
         """String representation of the Device."""

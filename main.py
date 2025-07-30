@@ -18,6 +18,7 @@ def main_process(logger, instap_box_slug):
     logger.info(f"Instap Box: {instap_box}")
     for device in instap_box.devices:
         logger.info(f" * Device: {device}")
+        logger.info(f"   > Model: {device.model}")
 
 def main():
     """Main function that initializes and runs the Instap Box application."""
