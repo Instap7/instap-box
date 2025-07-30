@@ -30,7 +30,7 @@ class Device:
         self.label = data.get('label')
         model_slug = data.get('model')
         device_model = fetch_item(f"http://five.instap.app/api/sql/oneau/device_model?slug=eq.{model_slug}")
-        self.model = DeviceModel(device_model)
+        self.model = DeviceModel(device_model.get('slug'))
     
     def __str__(self):
         """String representation of the Device."""

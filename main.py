@@ -19,6 +19,8 @@ def main_process(logger, instap_box_slug):
     for device in instap_box.devices:
         logger.info(f" * Device: {device}")
         logger.info(f"   > Model: {device.model}")
+        for modbus_register in device.model.modbus_registers:
+            logger.info(f"     * Modbus Register: {modbus_register}")
 
 def main():
     """Main function that initializes and runs the Instap Box application."""
