@@ -10,6 +10,7 @@ import logging
 import traceback
 from instap.box import InstapBox
 from instap.logger import setup_logger
+from instap.modbus.processor import ModbusProcessor
 
 def main_process(logger, instap_box_slug):
     # Initialize the main Instap Box
@@ -20,6 +21,8 @@ def main_process(logger, instap_box_slug):
         logger.info(f"   > Model: {device.model}")
         for modbus_register in device.model.modbus_registers:
             logger.info(f"     * Modbus Register: {modbus_register}")
+            modbus_processor = ModbusProcessor(modbus_register)
+            modbus_processor.process_modbus_register()
 
 def main():
     """Main function that initializes and runs the Instap Box application."""
