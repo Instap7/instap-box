@@ -1,6 +1,8 @@
 """
 Modbus client module for handling modbus register processing.
 """
+from pymodbus import FramerType
+from pymodbus.client import ModbusTcpClient
 
 from instap.logger import get_logger
 
@@ -14,14 +16,18 @@ class ModbusClient:
         self.host = host
         self.port = port
         self.framer = framer
+        #TODO: Zmienic framer TCP/RTU
+        self.client = ModbusTcpClient(self.host, port=self.port, framer=FramerType.RTU)
 
     def connect(self):
         """Connect to the modbus client."""
         self.logger.info(f"Connecting to modbus client {self}")
+        success = self.client.connect()
     
     def disconnect(self):
         """Disconnect from the modbus client."""
         self.logger.info(f"Disconnecting from modbus client {self}")
+        self.client.close()
 
     def __str__(self):
         return f"ModbusClient(host='{self.host}', port='{self.port}', framer='{self.framer}')"
