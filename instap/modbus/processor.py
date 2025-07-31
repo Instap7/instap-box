@@ -8,16 +8,19 @@ from instap.logger import get_logger
 class ModbusProcessor:
     """Class for processing modbus registers."""
     
-    def __init__(self, modbus_register):
+    def __init__(self, modbus_client):
         """Initialize the ModbusProcessor."""
         self.logger = get_logger(__name__)
-        self.modbus_register = modbus_register
-    
-    def process_modbus_register(self):
-        """
-        Process a modbus register.
-        
-        Args:
-            modbus_register: The modbus register to process
-        """
-        self.logger.info(f"Processing modbus register {self.modbus_register}")
+        self.modbus_client = modbus_client
+
+    def connect(self):
+        """Connect to the modbus client."""
+        self.logger.info(f"Connecting to modbus client {self.modbus_client}")
+
+    def disconnect(self):
+        """Disconnect from the modbus client."""
+        self.logger.info(f"Disconnecting from modbus client {self.modbus_client}")
+
+    def process_register(self, register):
+        """Process register from the modbus client."""
+        self.logger.info(f"Processing register {register} from modbus client {self.modbus_client}")

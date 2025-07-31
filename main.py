@@ -28,17 +28,16 @@ def main_process(instap_box_slug):
     while True:
         try:
             logger.info(f"Starting processing cycle for Instap Box: {instap_box_slug}")
-            all_modbus_registers = instap_box.get_all_modbus_registers()
+
+            for device in instap_box.devices:
+                modbus_client = device.model.modbus_client
+                modbus_client.connect()
+                for modbus_register in device.model.modbus_registers:
+                    modbus_processor = ModbusProcessor(modbus_client)
+                    modbus_processor.process_register(modbus_register)
+                modbus_client.disconnect()
             
-            for modbus_register in all_modbus_registers:
-                try:
-                    modbus_processor = ModbusProcessor(modbus_register)
-                    modbus_processor.process_modbus_register()
-                except Exception as e:
-                    logger.error(f"Error processing modbus register {modbus_register}: {e}")
-                    logger.error(traceback.format_exc())
-            
-            logger.info(f"Completed processing cycle. Processed {len(all_modbus_registers)} registers.")
+            logger.info(f"Completed processing cycle.")
             logger.info("Waiting 60 seconds before next cycle...")
             time.sleep(60)
             

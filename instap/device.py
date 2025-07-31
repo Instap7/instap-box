@@ -12,6 +12,7 @@ class Device:
     def __init__(self, slug):
         self.slug = slug
         self.name = None
+        self.all_modbus_registers = []
         self.logger = get_logger("instap.device")
         self.logger.debug(f"Initializing Device with slug: {slug}")
         self._fetch_item_data()
@@ -31,6 +32,14 @@ class Device:
         model_slug = data.get('model')
         device_model = fetch_item("device_model", f"slug=eq.{model_slug}")
         self.model = DeviceModel(device_model.get('slug'))
+
+    def get_all_modbus_registers(self, refresh=False):
+        """Return all modbus registers for the Device."""
+        if refresh or len(self.all_modbus_registers) == 0:
+            for modbus_register in self.model.modbus_registers:
+                self.logger.info(f" * Modbus Register: {modbus_register}")
+                self.all_modbus_registers.append(modbus_register)
+        return self.all_modbus_registers
     
     def __str__(self):
         """String representation of the Device."""
