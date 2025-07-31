@@ -13,14 +13,6 @@ class ModbusProcessor:
         self.logger = get_logger(__name__)
         self.modbus_client = modbus_client
 
-    def connect(self):
-        """Connect to the modbus client."""
-        self.logger.info(f"Connecting to modbus client {self.modbus_client}")
-
-    def disconnect(self):
-        """Disconnect from the modbus client."""
-        self.logger.info(f"Disconnecting from modbus client {self.modbus_client}")
-
     def process_register(self, register):
         """Process register from the modbus client."""
         self.logger.info(f"Processing register {register} from modbus client {self.modbus_client}")

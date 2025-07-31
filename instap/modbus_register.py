@@ -19,6 +19,7 @@ class ModbusRegister:
         # TODO:
         self.client = None
 
+    # To trzeba przeniesc do processora
     def _process_data(self):
         self.name = self.data.get('name')
         self.created_at = self.data.get('created_at')
