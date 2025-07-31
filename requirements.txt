@@ -1,9 +1,6 @@
-# Instap Box Python Dependencies
-# Add your dependencies here as needed
-
-# HTTP requests for API calls
+certifi==2025.7.14
+charset-normalizer==3.4.2
+idna==3.10
+pymodbus==3.8.6
 requests==2.31.0
-
-# Example dependencies (uncomment and modify as needed):
-# pymodbus==3.5.4
-# pyserial==3.5 
+urllib3==2.5.0
