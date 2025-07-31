@@ -50,7 +50,7 @@ def main_process(instap_box_slug):
             logger.info("Waiting 60 seconds before retry...")
             time.sleep(60)
     
-    return all_modbus_registers
+    return
 
 def main():
     """Main function that initializes and runs the Instap Box application."""

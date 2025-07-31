@@ -15,6 +15,14 @@ class ModbusClient:
         self.port = port
         self.framer = framer
 
+    def connect(self):
+        """Connect to the modbus client."""
+        self.logger.info(f"Connecting to modbus client {self}")
+    
+    def disconnect(self):
+        """Disconnect from the modbus client."""
+        self.logger.info(f"Disconnecting from modbus client {self}")
+
     def __str__(self):
         return f"ModbusClient(host='{self.host}', port='{self.port}', framer='{self.framer}')"
     
