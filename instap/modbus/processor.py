@@ -36,7 +36,7 @@ class ModbusProcessor:
             v = 'parameter,device={},parameter={},unit={} double={} {}'.format(device, parameter, unit, value, now)
         self.client_mqtt.publish("data/", v, qos=1)
 
-    def process_register(self, register):
+    def process_register(self, register, device):
         """Process register from the modbus client."""
         self.logger.info(f"Processing register {register} from modbus client {self.modbus_client}")
         DATA_TYPE = mixin.ModbusClientMixin.DATATYPE
