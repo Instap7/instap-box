@@ -10,7 +10,6 @@ echo ""
 
 # Configuration
 GITHUB_REPO="Instap7/instap-box"
-GITHUB_TOKEN="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"  # GitHub Personal Access Token
 GITHUB_URL="https://github.com/$GITHUB_REPO/archive/main.zip"
 TEMP_DIR="/tmp/instap-box-download"
 EXTRACT_DIR="$TEMP_DIR/instap-box-main"
@@ -46,27 +45,13 @@ DOWNLOAD_SUCCESS=false
 
 if command -v curl >/dev/null 2>&1; then
     echo "Trying to download with curl..."
-    if [ -n "$GITHUB_TOKEN" ]; then
-        echo "Using GitHub token for authentication..."
-        if curl -H "Authorization: token $GITHUB_TOKEN" -L -o instap-box.zip "$GITHUB_URL" 2>/dev/null; then
-            DOWNLOAD_SUCCESS=true
-        fi
-    else
-        if curl -L -o instap-box.zip "$GITHUB_URL" 2>/dev/null; then
-            DOWNLOAD_SUCCESS=true
-        fi
+    if curl -L -o instap-box.zip "$GITHUB_URL" 2>/dev/null; then
+        DOWNLOAD_SUCCESS=true
     fi
 elif command -v wget >/dev/null 2>&1; then
     echo "Trying to download with wget..."
-    if [ -n "$GITHUB_TOKEN" ]; then
-        echo "Using GitHub token for authentication..."
-        if wget --header="Authorization: token $GITHUB_TOKEN" -O instap-box.zip "$GITHUB_URL" 2>/dev/null; then
-            DOWNLOAD_SUCCESS=true
-        fi
-    else
-        if wget -O instap-box.zip "$GITHUB_URL" 2>/dev/null; then
-            DOWNLOAD_SUCCESS=true
-        fi
+    if wget -O instap-box.zip "$GITHUB_URL" 2>/dev/null; then
+        DOWNLOAD_SUCCESS=true
     fi
 else
     echo "Error: Neither curl nor wget is available. Please install one of them."
@@ -78,18 +63,9 @@ if [ "$DOWNLOAD_SUCCESS" = false ] || [ ! -f instap-box.zip ] || [ ! -s instap-b
     echo "Error: Failed to download the ZIP file from GitHub"
     echo ""
     echo "Possible reasons:"
-    echo "1. The repository is private and requires authentication"
-    echo "2. The repository doesn't exist publicly"
-    echo "3. Network connectivity issues"
-    echo ""
-    echo "To fix authentication issues:"
-    echo "1. Create a GitHub Personal Access Token:"
-    echo "   - Go to GitHub.com -> Settings -> Developer settings -> Personal access tokens"
-    echo "   - Generate new token with 'repo' permissions"
-    echo "2. Set the token as environment variable:"
-    echo "   export GITHUB_TOKEN=your_token_here"
-    echo "3. Or run the script with token:"
-    echo "   GITHUB_TOKEN=your_token_here ./run_download.sh"
+    echo "1. The repository doesn't exist publicly"
+    echo "2. Network connectivity issues"
+    echo "3. The repository URL is incorrect"
     exit 1
 fi
 
