@@ -34,7 +34,7 @@ def main_process(instap_box_slug):
                 modbus_client.connect()
                 for modbus_register in device.model.modbus_registers:
                     modbus_processor = ModbusProcessor(modbus_client)
-                    modbus_processor.process_register(modbus_register)
+                    modbus_processor.process_register(modbus_register, device)
                 modbus_client.disconnect()
             
             logger.info(f"Completed processing cycle.")

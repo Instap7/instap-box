@@ -14,7 +14,7 @@ class ModbusProcessor:
         self.logger = get_logger(__name__)
         self.modbus_client = modbus_client.client
 
-    def process_register(self, register):
+    def process_register(self, register, device):
         """Process register from the modbus client."""
         self.logger.info(f"Processing register {register} from modbus client {self.modbus_client}")
         DATA_TYPE = mixin.ModbusClientMixin.DATATYPE
