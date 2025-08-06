@@ -77,7 +77,7 @@ class ModbusProcessor:
                     value = byte_array.decode("utf-8", errors="ignore").strip("\x00")
                 else:
                     value = registers[0]
-                self.publish_mqtt(device, register.parameter, value, now, register.type_reg, register.unit)
+                self.publish_mqtt(device.slug, register.parameter, value, now, register.type_reg, register.unit)
                 self.logger.info(f"Register {register.address}: {value} {register.unit}")
 
         except Exception as e:
